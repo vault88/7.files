@@ -31,5 +31,26 @@ def get_shop_list_by_dishes(dishes, person_count):
             my_dict[name] = {'measure': measure, 'quantity': quantity * int(person_count)}
     print(my_dict)
 
+def sort_files_to_one(files, result_filename):
+    sequence = {}
+    for element in files:
+        with open(element,'rt', encoding='utf-8') as file:
+            f = file.readlines()
+        sequence[len(f)] = element
+    sorted_sequence = sorted(sequence.items())
+    with open(result_filename, 'wt', encoding='utf-8') as file:
+        for element in sorted_sequence:
+            file.write(str(element[1])+'\n')
+            file.write(str(element[0])+'\n')
+            with open(str(element[1]),'rt', encoding='utf-8') as f:
+                lines = f.readlines()
+            for l in lines:
+                file.write(l)
+            file.write('\n')
+
 # make_cookbook('recipes.txt')
 get_shop_list_by_dishes(['Запеченный картофель','Омлет'], 2)
+
+files = ['1.txt', '2.txt', '3.txt']
+result_filename = 'result.txt'
+sort_files_to_one(files,result_filename)
